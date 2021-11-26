@@ -1,3 +1,15 @@
+<?php
+  session_start();
+  if( isset($_SESSION['regerrors']) ){
+    $errors = $_SESSION['regerrors'];
+    $data = $_SESSION['data'];
+  }
+  // print "<pre>";
+  //               print_r( $errors );
+  session_destroy();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,28 +30,34 @@
 </head>
 <body>
   <div class="container">
-    <form class='login-email'>
+    <form class='login-email' method="post" action="config.php">
+        <input type="hidden" name="register">
       <p class='login-text' style="font-size:2rem;font-weight:800">Register</p>
       <div class='input-group'>
-        <input type='text' placeholder="User Name" name='username' required>
+        <label for="name"><?php isset($errors['nameerror']) ? print $errors['nameerror'] : '' ; ?></label>
+        <input type='text' id='naem' placeholder="User Name" name='name'  value="<?php isset($data['name']) ? print $data['name'] : '' ; ?>">
       </div>
       <div class='input-group'>
-        <input type='text' placeholder="User Surname" name='usersurname' required>
+        <label for="surname"><?php isset($errors['surnameerror']) ? print $errors['surnameerror'] : '' ; ?></label>
+        <input type='text' placeholder="User Surname" name='surname' value="<?php isset($data['surname']) ? print $data['surname'] : '' ; ?>">
       </div>
       <div class='input-group'>
-        <input type='text' placeholder="Age" name='age' required>
+        <label for="age"><?php isset($errors['ageerror']) ? print $errors['ageerror'] : '' ; ?></label>
+        <input type='text' placeholder="Age" name='age' value="<?php isset($data['age']) ? print $data['age'] : '' ; ?>">
       </div>
       <div class='input-group'>
-        <input type='email' placeholder="E-mail" name='email' required>
+        <label for="email"><?php isset($errors['emailerror']) ? print $errors['emailerror'] : '' ; ?></label>
+        <input type='email' placeholder="E-mail" name='email' value="<?php isset($data['email']) ? print $data['email'] : '' ; ?>">
       </div>
       <div class='input-group'>
-        <input type='password' placeholder="Password" name='password' required>
+        <label for="password"><?php isset($errors['passworderror']) ? print $errors['passworderror'] : '' ; ?></label>
+        <input type='password' placeholder="Password" name='password'>
       </div>
       <div class='input-group'>
-        <input type='password' placeholder="Confirm Password" name='cpassword' required>
+        <input type='password' placeholder="Confirm Password" name='cpassword'>
       </div>
       <div class='input-group'>
-        <button class="btn">Register</button>
+        <button name="submit" class="btn">Register</button>
       </div>
         <p class='login-register-text'>Have an account<a href="index.php">Login here</a></p>
     </form>
