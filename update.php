@@ -1,15 +1,12 @@
 <?php
-  session_start();
-  if( isset($_SESSION['logerrors']) ){
-    $errors = $_SESSION['logerrors'];
-    $data = $_SESSION['data'];
-  }
-  // print "<pre>";
-  //               print_r( $errors );
-  session_destroy();
+     $id = $_GET["id"];
+     $db = new mysqli("127.0.0.1","admin","password","products");
+     $db->set_charset("UTF8");
+     $product = $db->query("select * from products where id = '$id' ")->fetch_assoc();
+
+    //  print "<pre>";
+    //  print_r( $product['name'] );
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,26 +24,26 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
-<body style="display:flex;justify-content: center;align-items: center;" !important>
+<body style="display:flex;justify-content: center;align-items: center; overflow: hidden" !important>
 
 
 <div class="container">
     
     <form class='login-email' method="post" action="config.php">
-        <input type="hidden" name="login">
-        <p class='login-text' style="font-size:2rem;font-weight:800">Login</p>
+        <p class='login-text' style="font-size:2rem;font-weight:800">Update</p>
         <div class='input-group'>
             <h3 class='logerror' ><?php isset($errors['emailerror']) ? print $errors['emailerror'] : '' ; ?></h3 >
-            <input type='email' placeholder="E-mail" name='email' value="<?php isset($data['email']) ? print $data['email'] : '' ; ?>" required>
+            <input name='name'   value="<?= $product['name'] ?>" >
         </div>
         <div class='input-group'>
-            <input type='password' placeholder="Password" name='password' required>
+        <input type='text' name='description'   value="<?= $product['description'] ?>" >
+        <input name="update" class="visuallyhidden" value="<?= $product['id']?>" />
         </div>
         <div class='input-group'>
-            <button class="btn">Login</button>
+            <button class="btn">Save</button>
         </div>
         
-        <p class='login-register-text'>Don't have an account<a href="register.php">Register here</a></p>
+        <!-- <p class='login-register-text'>Don't have an account<a href="register.php">Register here</a></p> -->
     </form>
 </div>
 </body>
