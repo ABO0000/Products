@@ -12,7 +12,7 @@
         function __construct(){
             session_start();
             // $this->db = new mysqli("127.0.0.1","admin","password","products");// for local
-            $this->$db = new mysqli("ec2-3-211-228-251.compute-1.amazonaws.com:5432/d6mc7mfijjn3m8","sppqaxjmcubiuf","34bd3f37eaa3d9b679677bd05af88d1816a198e178579f0de4bc4f035acffa5c","products");//for heroku
+            $this->$db = new mysqli("ec2-3-211-228-251.compute-1.amazonaws.com:5432/d6mc7mfijjn3m8","sppqaxjmcubiuf","34bd3f37eaa3d9b679677bd05af88d1816a198e178579f0de4bc4f035acffa5c","config");//for heroku
 
             $this->db->set_charset("UTF8");
             if($_SERVER["REQUEST_METHOD"]=="POST"){
