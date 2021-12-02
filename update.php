@@ -1,7 +1,7 @@
 <?php
      $id = $_GET["id"];
-    //  $db = new mysqli("127.0.0.1","admin","password","products");
-    $db = new mysqli("ec2-3-211-228-251.compute-1.amazonaws.com:5432/d6mc7mfijjn3m8","sppqaxjmcubiuf","34bd3f37eaa3d9b679677bd05af88d1816a198e178579f0de4bc4f035acffa5c","config");//for heroku
+    //  $db = new mysqli("127.0.0.1","admin","password","product");
+    $db = new mysqli("ec2-3-211-228-251.compute-1.amazonaws.com:5432/d6mc7mfijjn3m8","sppqaxjmcubiuf","34bd3f37eaa3d9b679677bd05af88d1816a198e178579f0de4bc4f035acffa5c","products");//for heroku
     
      $db->set_charset("UTF8");
      $product = $db->query("select * from products where id = '$id' ")->fetch_assoc();
