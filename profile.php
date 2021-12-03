@@ -1,6 +1,6 @@
 <?php
-    // $db = new mysqli("127.0.0.1","admin","password","products"); //for local
-    $this->$db = new mysqli("ec2-34-233-214-228.compute-1.amazonaws.com:5432","uyawmmbkcyaaqr","f3aa4f92d0aaa318c12574f056e9e2d344e52e8fe0a4e72601e47ab3ce8209ee","products");//for heroku
+    $db = new mysqli("127.0.0.1","admin","password","products"); //for local
+    // $this->$db = new mysqli("ec2-34-233-214-228.compute-1.amazonaws.com:5432","uyawmmbkcyaaqr","f3aa4f92d0aaa318c12574f056e9e2d344e52e8fe0a4e72601e47ab3ce8209ee","products");//for heroku
     $db->set_charset("UTF8");
     
     session_start();
