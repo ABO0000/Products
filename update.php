@@ -1,9 +1,13 @@
 <?php
      $id = $_GET["id"];
-     $db = new mysqli("127.0.0.1","admin","password","products");
-    //  $this->$db = new mysqli("ec2-34-233-214-228.compute-1.amazonaws.com:5432","uyawmmbkcyaaqr","f3aa4f92d0aaa318c12574f056e9e2d344e52e8fe0a4e72601e47ab3ce8209ee","products");//for heroku    
-     $db->set_charset("UTF8");
-     $product = $db->query("select * from products where id = '$id' ")->fetch_assoc();
+
+     include "./config.php";
+    $productsClass = new Products; 
+
+    //  $productsClass->connect() = new mysqli("127.0.0.1","admin","password","products");
+    //  $this->$productsClass->connect() = new mysqli("ec2-34-233-214-228.compute-1.amazonaws.com:5432","uyawmmbkcyaaqr","f3aa4f92d0aaa318c12574f056e9e2d344e52e8fe0a4e72601e47ab3ce8209ee","products");//for heroku    
+     $productsClass->connect()->set_charset("UTF8");
+     $product = $productsClass->connect()->query("select * from products where id = '$id' ")->fetch_assoc();
 
     //  print "<pre>";
     //  print_r( $product['name'] );

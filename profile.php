@@ -1,23 +1,37 @@
 <?php
-    $db = new mysqli("127.0.0.1","admin","password","products"); //for local
-    // $this->$db = new mysqli("ec2-34-233-214-228.compute-1.amazonaws.com:5432","uyawmmbkcyaaqr","f3aa4f92d0aaa318c12574f056e9e2d344e52e8fe0a4e72601e47ab3ce8209ee","products");//for heroku
-    $db->set_charset("UTF8");
-    
-    session_start();
-    if( isset($_SESSION['user']) ){
-        $user = $_SESSION['user'];
-    }
 
-	$products = []; 
-    if( $sql = $db->query("SELECT * FROM `products`") ){
-        while ($row = mysqli_fetch_assoc($sql)) {
-            $products[] = $row;
-        }
+
+include "./config.php";
+$productsClass = new Products; 
+
+session_start();
+if( isset($_SESSION['user']) ){
+    $user = $_SESSION['user'];
+}
+
+$products = []; 
+if( $sql = $productsClass->connect()->query("SELECT * FROM `products`") ){
+    while ($row = mysqli_fetch_assoc($sql)) {
+        $products[] = $row;
     }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
+    $search=$_POST['search'];
+}
+// $searchProduct = [];
+
+
+// $sql = "SELECT * FROM products WHERE name LIKE '%".$search."%'";
+// $r_query = $productsClass->connect()->query("$sql");
+// while ($row = mysqli_fetch_assoc($r_query)){ 
+
+// $searchProducts[] = $row;
+// }
     // print "<pre>";
-    // print_r( $products );
-    // session_destroy();
+    // print_r( $searchProducts );
+
 ?>
 
 
@@ -41,7 +55,7 @@
     </style>
 </head>
 <body>
-        
+
     <section id="pattern" class="pattern">
         <div class='ext' style="width:100%; display:flex;justify-content: end;align-items: center; padding-top: 25px" !important>
             <?php if($user){ ?>
@@ -50,44 +64,88 @@
                 <p style="margin-left: 25px;"><a href='addproduct.php' style="color:white "> Add Product</a> </p>
                 <p style="margin-left: 15px; padding-right: 30px;"><a href='index.php' style="color:white "> Logout</a> </p>
             <?php }else{ ?>
-
                 <p style="padding-right: 30px;"><a href='index.php' style="color:white "> Login</a> </p>
             <?php } ?>
+        </div>
 
+        <div style="width: 50%;display:flex;justify-content:center;margin-top:50px">
+            <form action="profile.php" method="post" > 
+                <input type="text" id="search" name="search" style="width:400px;height: 50px; border-radius: 25px;padding-left:20px;font-size:22px" autoComplete="off">
+            </form> 
         </div>
   
-        <ul class="grid">
-            <?php if($user['type']!=1 ){ ?>
-                <?php foreach($products as $product){ ?>
-                    <li style="list-style-type:none;margin-top:60px ">
-                        
-                        <div  class="product" style="background-image: url('uploads/<?php echo $product['image'] ?>')"!important>
-                        </div>
-                        <p style="color:white "!important><a href="rating.php?id=<?= $product['id'] ?>"> <?php echo $product['name']; ?></a></p>
-                    </li>
-                <?php } ?>
-            <?php }else{ ?>
-                <?php foreach($products as $product){ ?>
-                    <li style="list-style-type:none ;margin-top:60px">
-                        <form action="config.php" method="post" style="margin-left:85%">
-                            <input name="delete" class="visuallyhidden" value="<?= $product['id']?>" />
-                            <button style="background:none ; border:0"><img src='https://www.freeiconspng.com/thumbs/x-png/x-png-15.png' style="width:20px "></button>    
-                        </form>
-                        <div  class="product" style=" background-image: url('uploads/<?php echo $product['image'] ?>') "!important>
-                        </div>
-                        <h4 style="color:white">
-                            <div style="width:40px"><a href="rating.php?id=<?= $product['id'] ?>" > <?php echo $product['name']; ?></a> </div>
-                            <div> <a href='update.php?id=<?= $product['id'] ?>' style="margin-left:150px">Update</a></div>
-                        </h4>
-                    </li>
-                <?php } ?>
-            <?php } ?>
+
+
+
+        
+
+        <ul class="grid" style="margin-top:0px ;width:80%">
+            
+            
+            <?php
+
+$result_page=8;
+$sql = $productsClass->connect()->query("SELECT * FROM `products`") ;
+
+
+                    $number_of_results=mysqli_num_rows($sql);
+                    
+                    $number_of_pages =ceil($number_of_results/$result_page);
+
+                    if(!isset($_GET['page'])){
+                        $page=1;
+                    }else{
+                        $page=$_GET['page'];
+                    }
+                    
+                    $this_page_first_result = ($page-1)*$result_page;
+                    
+                    $searchProduct = [];
+                    
+                    $sql = $productsClass->connect()->query("SELECT * FROM `products` WHERE name LIKE '%" . $search . "%' LIMIT " . $this_page_first_result . "," . $result_page) ;
+                    
+                    while (($row = mysqli_fetch_array($sql))) { 
+                        ?>
+                        <?php if($user['type']!=1 ){ ?>
+                            <li style="list-style-type:none ;margin-top:60px;margin-bottom:-200px ;display:flex;justify-content:center;flex-wrap:wrap ">
+                                            
+                                <div  class="product" style="background-image: url('uploads/<?php echo $row['image'] ?>')"!important>
+                                </div>
+                                <div style="color:white;width: 250px;margin-top:-70px;display:flex;justify-content: space-between;">
+                                    <a href="rating.php?id=<?= $row['id'] ?>" style="width:40px ; text-decoration: none"> <h3 style="font-family: fantasy"><?php echo $row['name']; ?></h3></a> 
+                                </div>
+                            </li>
+                        <?php }else{ ?>
+                
+                            <li style="list-style-type:none ;margin-top:60px;margin-bottom:-200px ;display:flex;justify-content:center;flex-wrap:wrap ">
+                                <form action="config.php" method="post" style="margin-left:80% ">
+                                    <input name="delete" class="visuallyhidden" value="<?= $row['id']?>" />
+                                    <button style="background:none ; border:0"><img src='https://www.freeiconspng.com/thumbs/x-png/x-png-15.png' style="width:20px "></button>    
+                                </form>
+                                <div  class="product" style=" background-image: url('uploads/<?php echo $row['image'] ?>') "!important>
+                                </div>
+                                <div style="color:white;width: 250px;margin-top:-70px;display:flex;justify-content: space-between;">
+                                    <a href="rating.php?id=<?= $row['id'] ?>" style="    text-decoration: none"> <h3 style="font-family: fantasy"><?php echo $row['name']; ?></h3></a> 
+                                    <a href='update.php?id=<?= $row['id'] ?>' style="   text-decoration: none; "><h4 style="font-family: cursive;">Update</h4></a>
+                                </div>
+                            </li>
+                        <?php } ?>
+                    <?php } ?>
+
+            
+                
 		</ul>
+        <div style="width: 100%; display:flex;justify-content:center;">
+            <?for($page=1;$page<=$number_of_pages;$page++){?>
+                <a href="profile.php?page=<?=$page?>"><h1><?=$page?></h1></a>
+            <?php }?>
+        </div>
 	</section>
-	
-	
+
+
+  
 
 </body>
 
-
 </html>
+ 

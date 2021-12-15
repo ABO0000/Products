@@ -1,11 +1,14 @@
 <?php
     $id = $_GET["id"];
-    $db = new mysqli("127.0.0.1","admin","password","products");
-    // $this->$db = new mysqli("ec2-34-233-214-228.compute-1.amazonaws.com:5432","uyawmmbkcyaaqr","f3aa4f92d0aaa318c12574f056e9e2d344e52e8fe0a4e72601e47ab3ce8209ee","products");//for heroku
-    $db->set_charset("UTF8");
-    $product = $db->query("select * from products where id = '$id' ")->fetch_assoc();
-    // $result = $db->query("select * from ratings where product_id = '$product[id]' ");
-    $ratings=mysqli_query($db, "select * from ratings  where product_id = '$product[id]' ORDER BY id DESC ");
+
+    include "./config.php";
+    $productsClass = new Products; 
+    
+    // $this->$productsClass->connect() = new mysqli("ec2-34-233-214-228.compute-1.amazonaws.com:5432","uyawmmbkcyaaqr","f3aa4f92d0aaa318c12574f056e9e2d344e52e8fe0a4e72601e47ab3ce8209ee","products");//for heroku
+    $productsClass->connect()->set_charset("UTF8");
+    $product = $productsClass->connect()->query("select * from products where id = '$id' ")->fetch_assoc();
+    // $result = $productsClass->connect()->query("select * from ratings where product_id = '$product[id]' ");
+    $ratings=mysqli_query($productsClass->connect(), "select * from ratings  where product_id = '$product[id]' ORDER BY id DESC ");
     
         // print "<pre>";
         // print_r( $ratings );
@@ -38,7 +41,7 @@
 <body style="display:flex;justify-content: center;align-items: center;" !important>
     <div class="container" style="width:40% ; min-height:800px ;min-width:300px">
         <a href="profile.php" style="margin-right:89% ; margin-top:-1%">
-            <button  class='btn'><<< back</button>
+            <button  class='btn' style="width:50px; background-color: #555555;color:white;font-size: 20px"!important>back</button>
         </a>
         <img src="uploads/<?php echo $product['image'] ?>" style="width:300px;height:300px ;position: absolute;">
         <form action="config.php" method="post" >
@@ -67,7 +70,7 @@
                     <div  style="display:flex;align-items: center; min-height:60px ;padding-left:15px">
                         <div style="min-width:130px">
                             <?php  
-                                $user = mysqli_query($db, "select * from users where id = '$row[user_id]' ")->fetch_assoc();
+                                $user = mysqli_query($productsClass->connect(), "select * from users where id = '$row[user_id]' ")->fetch_assoc();
                             ?>
                             <h3><?=$user['name']?></h3>
                         

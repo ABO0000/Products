@@ -116,7 +116,7 @@ body section,.container{
 
 .grid {
   width: 1200px;
-  min-height: 1000px;
+  /* min-height: 1000px; */
   overflow: hidden;
   padding: 0.5em 0 0 0.5em;
   display: flex;

@@ -37,7 +37,7 @@
 
 <div class="container" >
         
-    <a href="profile.php" style="margin-right:80%"><button  class='btn'><<< back</button></a>
+    <a href="profile.php" style="margin-right:80%"><button type="button"  style="width:55px; background-color: #555555;color:white;font-size: 20px"!important>back</button></a>
 
     <form class='login-email' method="post" action="config.php" enctype="multipart/form-data" style="margin-bottom:60px">
         <input type="hidden" name="addproduct">
