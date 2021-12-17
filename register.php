@@ -34,15 +34,15 @@
         <input type="hidden" name="register">
       <p class='login-text' style="font-size:2rem;font-weight:800">Register</p>
       <div class='input-group'>
-        <label for="name"><?php isset($errors['nameerror']) ? print $errors['nameerror'] : '' ; ?></label>
-        <input type='text' id='naem' placeholder="User Name" name='name'  value="<?php isset($data['name']) ? print $data['name'] : '' ; ?>">
+        <label for="name" style="color:red"><?php isset($errors['nameerror']) ? print $errors['nameerror'] : '' ; ?></label>
+        <input type="text" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==10)" minlength="2" maxlength="16" id='naem' placeholder="User Name" name='name'  value="<?php isset($data['name']) ? print $data['name'] : '' ; ?>">
       </div>
       <div class='input-group'>
-        <label for="surname"><?php isset($errors['surnameerror']) ? print $errors['surnameerror'] : '' ; ?></label>
-        <input type='text' placeholder="User Surname" name='surname' value="<?php isset($data['surname']) ? print $data['surname'] : '' ; ?>">
+        <label for="surname" style="color:red"><?php isset($errors['surnameerror']) ? print $errors['surnameerror'] : '' ; ?></label>
+        <input type='text' onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==10)" minlength="2" maxlength="16" placeholder="User Surname" name='surname' value="<?php isset($data['surname']) ? print $data['surname'] : '' ; ?>">
       </div>
       <div class='input-group'>
-        <label for="age"><?php isset($errors['ageerror']) ? print $errors['ageerror'] : '' ; ?></label>
+        <label for="age" style="color:red"><?php isset($errors['ageerror']) ? print $errors['ageerror'] : '' ; ?></label>
         <!-- <input type='number' placeholder="Age" name='age' value="<?php isset($data['age']) ? print $data['age'] : '' ; ?>">   -->
         <!-- <input type="number" size="4" min="6" placeholder="Age" name='age' value="<?php isset($data['age']) ? print $data['age'] : '' ; ?>" required > -->
 
@@ -127,15 +127,16 @@
 
       </div>
       <div class='input-group'>
-        <label for="email"><?php isset($errors['emailerror']) ? print $errors['emailerror'] : '' ; ?></label>
-        <input type='email' placeholder="E-mail" name='email' value="<?php isset($data['email']) ? print $data['email'] : '' ; ?>">
+        <label for="email" style="color:red"><?php isset($errors['emailerror']) ? print $errors['emailerror'] : '' ; ?></label>
+        <!-- <input type='email' placeholder="E-mail" name='email' value="<?php isset($data['email']) ? print $data['email'] : '' ; ?>"> -->
+        <input type='email' minlength="2" maxlength="23" placeholder="E-mail" name='email' value="<?php isset($data['email']) ? print $data['email'] : ''?>">
       </div>
       <div class='input-group'>
-        <label for="password"><?php isset($errors['passworderror']) ? print $errors['passworderror'] : '' ; ?></label>
-        <input type='password' placeholder="Password" name='password'>
+        <label for="password" style="color:red"><?php isset($errors['passworderror']) ? print $errors['passworderror'] : '' ; ?></label>
+        <input type='password' minlength="2" maxlength="16" placeholder="Password" name='password'>
       </div>
       <div class='input-group'>
-        <input type='password' placeholder="Confirm Password" name='cpassword'>
+        <input type='password' minlength="2" maxlength="16" placeholder="Confirm Password" name='cpassword'>
       </div>
       <div class='input-group'>
         <button name="submit" class="btn">Register</button>

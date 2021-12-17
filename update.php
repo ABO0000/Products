@@ -4,13 +4,19 @@
      include "./config.php";
     $productsClass = new Products; 
 
-    //  $productsClass->connect() = new mysqli("127.0.0.1","admin","password","products");
-    //  $this->$productsClass->connect() = new mysqli("ec2-34-233-214-228.compute-1.amazonaws.com:5432","uyawmmbkcyaaqr","f3aa4f92d0aaa318c12574f056e9e2d344e52e8fe0a4e72601e47ab3ce8209ee","products");//for heroku    
-     $productsClass->connect()->set_charset("UTF8");
+    $productsClass->connect()->set_charset("UTF8");
      $product = $productsClass->connect()->query("select * from products where id = '$id' ")->fetch_assoc();
 
-    //  print "<pre>";
-    //  print_r( $product['name'] );
+     if( isset($_SESSION['updateerrors']) ){
+        $errors = $_SESSION['updateerrors'];
+        $data = $_SESSION['data'];
+      }
+      // print "<pre>";
+      //               print_r( $errors );
+      unset($_SESSION['updateerrors']); 
+      unset($_SESSION['data']); 
+      
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,18 +43,18 @@
     <form class='login-email' method="post" action="config.php">
         <p class='login-text' style="font-size:2rem;font-weight:800">Update</p>
         <div class='input-group'>
-            <h3 class='logerror' ><?php isset($errors['emailerror']) ? print $errors['emailerror'] : '' ; ?></h3 >
-            <input name='name'   value="<?= $product['name'] ?>" >
+            <h3 class='logerror' style="color:red"><?php isset($errors['nameerror']) ? print $errors['nameerror'] : '' ; ?></h3 >
+            <input name='name' minlength="2" maxlength="16" placeholder="Product Name" value="<?php isset($data['name']) ? print $data['name'] : print $product['name']  ; ?>" >
         </div>
         <div class='input-group'>
-        <input type='text' name='description'   value="<?= $product['description'] ?>" >
+        <h3 class='logerror' style="color:red"><?php isset($errors['descriptionerror']) ? print $errors['descriptionerror'] : '' ; ?></h3 >
+        <input type='text' name='description' placeholder="Description" minlength="2" maxlength="50" value="<?php isset($data['description']) ? print $data['description'] : print $product['description']  ; ?>">
         <input name="update" class="visuallyhidden" value="<?= $product['id']?>" />
         </div>
         <div class='input-group'>
             <button class="btn">Save</button>
         </div>
         
-        <!-- <p class='login-register-text'>Don't have an account<a href="register.php">Register here</a></p> -->
     </form>
 </div>
 </body>

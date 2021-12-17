@@ -47,30 +47,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <title>Document</title>
-    <style>
-        /* .pattern{
-            background:white;
-        } */
-        
-    </style>
 </head>
 <body>
 
     <section id="pattern" class="pattern">
-        <div class='ext' style="width:100%; display:flex;justify-content: end;align-items: center; padding-top: 25px" !important>
-            <?php if($user){ ?>
-                <h1 style="color:white ;margin-left: 25px;"><?php echo $user['name']; ?> </h1>
-                <h1 style="color:white;margin-left: 10px; "><?php echo $user['surname']; ?> </h1>
-                <p style="margin-left: 25px;"><a href='addproduct.php' style="color:white "> Add Product</a> </p>
-                <p style="margin-left: 15px; padding-right: 30px;"><a href='index.php' style="color:white "> Logout</a> </p>
-            <?php }else{ ?>
-                <p style="padding-right: 30px;"><a href='index.php' style="color:white "> Login</a> </p>
-            <?php } ?>
+        <div class='ext' style="width:100%; display:flex;justify-content: space-between;align-items: center; padding: 20px;background:#563d7c; position:sticky;top:0;z-index: 1071;" !important>
+            <a href="profile.php" style="text-decoration:none"><h1 style="color:white ;margin-left: 25px;font-size:40px">Profile</h1></a>
+            <div style=" display:flex;justify-content: space-between;align-items: center">
+                <?php if($user){ ?>
+                    <h1 style="color:white ;margin-left: 25px;"><?php echo $user['name']; ?> </h1>
+                    <h1 style="color:white;margin-left: 10px; "><?php echo $user['surname']; ?> </h1>
+                    <p style="margin-left: 25px;"><a href='addproduct.php' style="color:white "> Add Product</a> </p>
+                    <p style="margin-left: 15px; padding-right: 30px;"><a href='index.php' style="color:white "> Logout</a> </p>
+                <?php }else{ ?>
+                    <p style="padding-right: 30px;"><a href='index.php' style="color:white "> Login</a> </p>
+                <?php } ?>
+            </div>
         </div>
 
         <div style="width: 50%;display:flex;justify-content:center;margin-top:50px">
-            <form action="profile.php" method="post" > 
-                <input type="text" id="search" name="search" style="width:400px;height: 50px; border-radius: 25px;padding-left:20px;font-size:22px" autoComplete="off">
+            <form action="search.php" method="post" > 
+                <input type="text" id="search" maxlength="25" name="search" style="width:400px;height: 50px; border-radius: 25px;padding-left:20px;font-size:22px" autoComplete="off">
             </form> 
         </div>
   
@@ -132,20 +129,69 @@ $sql = $productsClass->connect()->query("SELECT * FROM `products`") ;
                         <?php } ?>
                     <?php } ?>
 
+
+
+                    
             
                 
 		</ul>
-        <div style="width: 100%; display:flex;justify-content:center;">
+        <!-- <div style="width: 100%; display:flex;justify-content:center;">
             <?for($page=1;$page<=$number_of_pages;$page++){?>
                 <a href="profile.php?page=<?=$page?>"><h1><?=$page?></h1></a>
             <?php }?>
+        </div> -->
+                <!-- <?php print_r($_SERVER)?> -->
+
+        <div class="pagination-container wow zoomIn mar-b-1x" data-wow-duration="0.5s" style="width: 50%; display:flex;justify-content:center;">
+            <ul class="pagination">
+                <?php if($_SERVER['argv'][0]==[]){?>
+                    <!-- <?php if($_SERVER['REQUEST_URI']=='/profile.php'){}?> for Heroku -->
+                            <li class="pagination-item is-active"> <a class="pagination-link--wide" href="profile.php?page=1">1</a> </li>
+                            
+                            <?php for($page=2;$page<=$number_of_pages;$page++){?>
+                                <?php if($_SERVER['argv'][0]=="page=$page"){ ?>
+                    <!-- <?php if($_SERVER['QUERY_STRING']=="page=$page"){} ?> for Heroku -->
+
+                                    <li class="pagination-item is-active"> <a class="pagination-link--wide" href="profile.php?page=<?=$page?>"><?=$page?></a> </li>
+                        <?php }else{?>
+                            <li class="pagination-item"> <a class="pagination-link--wide" href="profile.php?page=<?=$page?>"><?=$page?></a> </li>
+                        <?php }?>
+                    <?php } ?>
+                <?php }else{?>
+                    <?php for($page=1;$page<=$number_of_pages;$page++){?>
+                        <?php if($_SERVER['QUERY_STRING']=="page=$page"){ }?> <!-- for Heroku -->
+                        <?php if($_SERVER['argv'][0]=="page=$page"){ ?>
+
+                            <li class="pagination-item is-active"> <a class="pagination-link--wide" href="profile.php?page=<?=$page?>"><?=$page?></a> </li>
+                        <?php }else{?>
+                            <li class="pagination-item"> <a class="pagination-link--wide" href="profile.php?page=<?=$page?>"><?=$page?></a> </li>
+                        <?php }?>
+                    <?php }?>
+
+
+                <?php }?>
+
+                <!-- <li class="pagination-item first-number"> <a class="pagination-link" href="#">1</a> </li>
+                <li class="pagination-item"> <a class="pagination-link" href="#">2</a> </li>
+                <li class="pagination-item is-active"> <a class="pagination-link" href="#">3</a> </li>
+                <li class="pagination-item"> <a class="pagination-link" href="#">4</a> </li>
+                <li class="pagination-item"> <a class="pagination-link" href="#">5</a> </li>
+                <li class="pagination-item--wide last"> <a class="pagination-link--wide last" href="#">Next</a> </li> -->
+            </ul>
+
         </div>
+    
+    
 	</section>
 
 
   
 
 </body>
+
+    <script>
+        
+    </script>
 
 </html>
  

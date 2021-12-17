@@ -36,11 +36,11 @@
         <input type="hidden" name="login">
         <p class='login-text' style="font-size:2rem;font-weight:800">Login</p>
         <div class='input-group'>
-            <h3 class='logerror' ><?php isset($errors['emailerror']) ? print $errors['emailerror'] : '' ; ?></h3 >
-            <input type='email' placeholder="E-mail" name='email' value="<?php isset($data['email']) ? print $data['email'] : '' ; ?>" required>
+            <h3 class='logerror' style="color:red"><?php isset($errors['emailerror']) ? print $errors['emailerror'] : '' ; ?></h3 >
+            <input type='email' minlength="2" maxlength="25" placeholder="E-mail" name='email' value="<?php isset($data['email']) ? print $data['email'] : '' ; ?>" required>
         </div>
         <div class='input-group'>
-            <input type='password' placeholder="Password" name='password' required>
+            <input type='password' minlength="2" maxlength="16" placeholder="Password" name='password' required>
         </div>
         <div class='input-group'>
             <button class="btn">Login</button>

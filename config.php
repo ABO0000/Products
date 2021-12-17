@@ -163,7 +163,7 @@ class Products
         $newfilename = round(microtime(true)) . '.' . end($temp);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+        // $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
         if ($check !== false) {
             // echo "File is an image - " . $check["mime"] . ".";
             $uploadOk = 1;
@@ -187,14 +187,14 @@ class Products
             $uploadOk = 0;
         }
 
-        if ($uploadOk == 0) {
-            // echo "Sorry, your file was not uploaded.";
-            // if everything is ok, try to upload file
-        } else {
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                // echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
-            }
-        }
+        // if ($uploadOk == 0) {
+        //     // echo "Sorry, your file was not uploaded.";
+        //     // if everything is ok, try to upload file
+        // } else {
+        //     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+        //         // echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+        //     }
+        // }
         if (empty($name)) {
             $errors['nameerror'] = 'Name field is required';
         }
@@ -269,7 +269,7 @@ class Products
         $product_id = $_POST['update'];
         $name = $_POST['name'];
         $description = $_POST['description'];
-
+        $errors = [];   
         if (empty($name)) {
             $errors['nameerror'] = 'name field is required';
         } else if (empty($description)) {
@@ -278,12 +278,18 @@ class Products
 
             $this->connect()->query("UPDATE products SET name='$name', description='$description'  WHERE id=$product_id");
         }
-
-
-        header("Location:profile.php");
-
+        if (count($errors)) {
+            $_SESSION['updateerrors'] = $errors;
+            $_SESSION['data'] = $_POST;
+            header("Location:update.php?id=$product_id");
+        } else {
+            header("Location:profile.php");
+        }
+        
+        // header("Location:profile.php");
+        
         // print "<pre>";
-        // print_r($product_id);
+        // print_r($errors);
     }
 }
 new Products();

@@ -43,17 +43,17 @@
         <input type="hidden" name="addproduct">
         <p class='login-text' style="font-size:2rem;font-weight:800">Add Product</p>
         <div class='input-group'>
-            <label for="name"><?php isset($errors['nameerror']) ? print $errors['nameerror'] : '' ; ?></label>
-            <input type='text' id='naem' placeholder="Product Name" name='name'  value="<?php isset($data['name']) ? print $data['name'] : '' ; ?>">
+            <label for="name" style="color:red"><?php isset($errors['nameerror']) ? print $errors['nameerror'] : '' ; ?></label>
+            <input type='text' id='naem' minlength="2" maxlength="16" placeholder="Product Name" name='name'  value="<?php isset($data['name']) ? print $data['name'] : '' ; ?>">
         </div>
         <div class='input-group'>
-            <label for="description"><?php isset($errors['descriptionerror']) ? print $errors['descriptionerror'] : '' ; ?></label>
-            <input type='text' placeholder="Description" name='description' value="<?php isset($data['description']) ? print $data['description'] : '' ; ?>">
+            <label for="description" style="color:red"><?php isset($errors['descriptionerror']) ? print $errors['descriptionerror'] : '' ; ?></label>
+            <input type='text' placeholder="Description" minlength="1" maxlength="50" name='description' value="<?php isset($data['description']) ? print $data['description'] : '' ; ?>">
         </div>
         <div class='input-group'>
             <!-- <input type="file" name="c_image" value="<?php echo $img; ?>"  /> -->
             <!-- <img src="bg.jpg" width="150px" height="100px"> -->
-            <label for="fileToUpload"><?php isset($errors['imageerror']) ? print $errors['imageerror'] : '' ; ?></label>
+            <label for="fileToUpload" style="color:red"><?php isset($errors['imageerror']) ? print $errors['imageerror'] : '' ; ?></label>
             <input type="file" name="fileToUpload" id="fileToUpload">
             <input class="btn" type="submit" value="Upload Image" name="submit" style="margin-top:25px">
         </div>
