@@ -53,9 +53,19 @@
         </div>
         <div class='input-group'>
             <button class="btn">Save</button>
+
+            
         </div>
         
     </form>
+    <form class='login-email' action="config.php" method="post">
+    <div class='input-group'>
+
+        <input name="delete" class="visuallyhidden" value="<?= $product['id']?>" />
+        <button class="btn" style="width: 250.66px;">Delete</button>   
+    </div> 
+    </form>    
+
 </div>
 </body>
 

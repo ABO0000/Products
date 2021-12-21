@@ -47,6 +47,25 @@ $search=$_SESSION['search'];
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <title>Document</title>
+
+    <script>
+function showResult(str) {
+  if (str.length==0) {
+    document.getElementById("livesearch").innerHTML="";
+    document.getElementById("livesearch").style.border="0px";
+    return;
+  }
+  var xmlhttp=new XMLHttpRequest();
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+      document.getElementById("livesearch").innerHTML=this.responseText;
+      document.getElementById("livesearch").style.border="1px solid #A5ACB2";
+    }
+  }
+  xmlhttp.open("GET","livesearch.php?q="+str,true);
+  xmlhttp.send();
+}
+</script>
     
 </head>
 <body>
@@ -67,8 +86,9 @@ $search=$_SESSION['search'];
         </div>
 
         <div style="width: 50%;display:flex;justify-content:center;margin-top:50px">
-            <form action="search.php" method="post" > 
-                <input type="text" id="search" maxlength="25" value="<?=$search?>" name="search" style="width:400px;height: 50px; border-radius: 25px;padding-left:20px;font-size:22px" autoComplete="off">
+        <form action="search.php" method="post" > 
+                <input type="text" id="search" maxlength="25" name="search" style="width:400px;height: 50px; border-radius: 25px;padding-left:20px;font-size:22px" size="30" onkeyup="showResult(this.value)" autoComplete="off">
+                <div id="livesearch" style="color: black;padding:40px 30px 0 25px ; margin-top:-40px;border-radius: 25px; background-color:white"></div>
             </form> 
         </div>
   
@@ -101,8 +121,37 @@ $search=$_SESSION['search'];
                 
                 while (($row = mysqli_fetch_array($sql))) { 
                     ?>
-            
-                        <li style="list-style-type:none ;margin-top:60px;margin-bottom:-200px ;display:flex;justify-content:center;flex-wrap:wrap ">
+
+                        <?php if($user['type']!=1 ){ ?>
+                            <li style="list-style-type:none ;margin-top:60px;margin-bottom:-200px ;display:flex;justify-content:center;flex-wrap:wrap ">
+                                            
+                                <div  class="product" style="background-image: url('uploads/<?php echo $row['image'] ?>')"!important>
+                                </div>
+                                <div style="color:white;width: 250px;margin-top:-70px;display:flex;justify-content: space-between;">
+                                    <a href="rating.php?id=<?= $row['id'] ?>" style="width:40px ; text-decoration: none"> <h3 style="font-family: fantasy"><?php echo $row['name']; ?></h3></a> 
+                                </div>
+                            </li>
+                        <?php }else{ ?>
+                
+                            <li style="list-style-type:none ;margin-top:60px;margin-bottom:-200px ;display:flex;justify-content:center;flex-wrap:wrap ">
+                                <form action="config.php" method="post" style="margin-left:80% ">
+                                    <input name="delete" class="visuallyhidden" value="<?= $row['id']?>" />
+                                    <button style="background:none ; border:0"><img src='https://www.freeiconspng.com/thumbs/x-png/x-png-15.png' style="width:20px "></button>    
+                                </form>
+                                <div  class="product" style=" background-image: url('uploads/<?php echo $row['image'] ?>') "!important>
+                                </div>
+                                <div style="color:white;width: 250px;margin-top:-70px;display:flex;justify-content: space-between;">
+                                    <a href="rating.php?id=<?= $row['id'] ?>" style="    text-decoration: none"> <h3 style="font-family: fantasy"><?php echo $row['name']; ?></h3></a> 
+                                    <a href='update.php?id=<?= $row['id'] ?>' style="   text-decoration: none; "><h4 style="font-family: cursive;">Update</h4></a>
+                                </div>
+                            </li>
+                        <?php } ?>
+
+
+
+
+
+                        <!-- <li style="list-style-type:none ;margin-top:60px;margin-bottom:-200px ;display:flex;justify-content:center;flex-wrap:wrap ">
                             <form action="config.php" method="post" style="margin-left:80% ">
                                 <input name="delete" class="visuallyhidden" value="<?= $row['id']?>" />
                                 <button style="background:none ; border:0"><img src='https://www.freeiconspng.com/thumbs/x-png/x-png-15.png' style="width:20px "></button>    
@@ -113,7 +162,7 @@ $search=$_SESSION['search'];
                                 <a href="rating.php?id=<?= $row['id'] ?>" style="text-decoration: none"> <h3 style="font-family: fantasy"><?php echo $row['name']; ?></h3></a> 
                                 <a href='update.php?id=<?= $row['id'] ?>' style="text-decoration: none; "><h4 style="font-family: cursive;">Update</h4></a>
                             </div>
-                        </li>
+                        </li> -->
                 <?php } ?>
 
 

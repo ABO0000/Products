@@ -46,17 +46,17 @@ class Products
 
     public function connect()
     {
-        // $cleardb_url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-        // $cleardb_server = $cleardb_url["host"];
-        // $cleardb_username = $cleardb_url["user"];
-        // $cleardb_password = $cleardb_url["pass"];
-        // $cleardb_db = substr($cleardb_url["path"], 1);
-        // $active_group = 'default';
-        // $query_builder = TRUE;
+        $cleardb_url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+        $cleardb_server = $cleardb_url["host"];
+        $cleardb_username = $cleardb_url["user"];
+        $cleardb_password = $cleardb_url["pass"];
+        $cleardb_db = substr($cleardb_url["path"], 1);
+        $active_group = 'default';
+        $query_builder = TRUE;
 
-        // $this->db = mysqli_connect($cleardb_server, $cleardb_username, $cleardb_password, $cleardb_db);
+        $this->db = mysqli_connect($cleardb_server, $cleardb_username, $cleardb_password, $cleardb_db);
 
-        $this->db = new mysqli("127.0.0.1","admin","password","products");
+        // $this->db = new mysqli("127.0.0.1","admin","password","products");
 
         return $this->db;
     }
@@ -164,13 +164,13 @@ class Products
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
         // $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-        if ($check !== false) {
-            // echo "File is an image - " . $check["mime"] . ".";
-            $uploadOk = 1;
-        } else {
-            $errors['imageerror'] = "File is not an image.";
-            $uploadOk = 0;
-        }
+        // if ($check !== false) {
+        //     // echo "File is an image - " . $check["mime"] . ".";
+        //     $uploadOk = 1;
+        // } else {
+        //     $errors['imageerror'] = "File is not an image.";
+        //     $uploadOk = 0;
+        // }
 
         // if (file_exists($target_file)) {
         //         $errors['imageerror'] = "Sorry, file already exists.";
@@ -197,6 +197,13 @@ class Products
         // }
         if (empty($name)) {
             $errors['nameerror'] = 'Name field is required';
+        }else {
+            $product = $this->connect()->query("select * from products where name = '$name' ")->fetch_assoc();
+
+
+            if ($product != NULL) {
+                $errors['nameerror'] = "anun@ zbaxvaca";
+            } 
         }
         if (empty($description)) {
             $errors['descriptionerror'] = 'Description field is required';
@@ -236,7 +243,7 @@ class Products
         $user_id = $_SESSION['user']['id'];
         $product_id = $_POST['product_id_for_rating'];
         if ($user_id) {
-            if ($rating && $comment) {
+            if ($rating ) {
                 $this->connect()->query("INSERT INTO ratings (user_id,product_id,rating,comment) VALUES ('$user_id', '$product_id','$rating','$comment')");
                 header("Location:rating.php?id=$product_id");
             }

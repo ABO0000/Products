@@ -42,7 +42,7 @@ body section,.container{
 .container .login-social{
   display:grid;
   grid-template-columns: repeat(auto-fit , minmax(50%,1fr));
-  margin-bottom: 25px;
+  margin-bottom: 25px;    
 }
 .container.login-social a {
   padding:12px;
@@ -124,13 +124,13 @@ body section,.container{
   margin-top: 150px;
   margin-left: 7%  ;
 
-
 }
 
 .grid li {
   padding: 0 0.5em 0.5em 0;
   top: 0;
   max-width: 300px;
+
 }
 .grid li > div {
   width: 250px;
@@ -139,6 +139,8 @@ body section,.container{
   box-sizing: border-box;
   padding: 5em 2em;
   text-align: center;
+  padding-inline-start: 0px;
+
 }
 .grid li a {
   color: #fff;
@@ -152,7 +154,7 @@ body section,.container{
 .product-review-stars{
   margin: 50px 50px; 
   background: #2C3E50;
-  padding: 10px 33px 20px 20px;
+  padding: 30px 33px 20px 20px;
 }
 
 .product-review-stars label{
@@ -379,7 +381,8 @@ body section,.container{
 }
  .pagination-link--wide.first:before, .pagination-link--wide.last:after {
 	 font-family: 'entypo';
-	 speak: none;
+	 /* speak: none; */
+	 speak-as: none;
 	 font-style: normal;
 	 font-weight: normal;
 	 font-variant: normal;
