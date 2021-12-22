@@ -34,18 +34,60 @@ if (strlen($q)>0) {
     // $this_page_first_result = ($page-1)*$result_page;
 }
 
+// if (!$sql) echo 'no suggestion';
+
+
+// $pro_names = [];
+// foreach ($sql as $pro) {
+//     $pro_names[] = $pro['name'];
+// }
+
+// $product_names = [];
+// foreach($searchproduct as $i){
+//     array_push($product_names, $i['name'] );
+// }
+
+// foreach($pro_names as $prod){
+//     $index = array_search($prod, $product_names);
+//     $page = ceil($index / 8);
+//     if($page==0){
+//         $page=1;
+//     }
+//     $hint="<a href='profile.php?page=$page'>" . $prod . "</a>";
+//     print('<pre>');
+//     print_r($hint);
+// }    
+
+
+
+
+
 if (!$sql) echo 'no suggestion';
 
 
 $pro_names = [];
 foreach ($sql as $pro) {
-    $pro_names[] = $pro['name'];
+    // $pro_names[] = $pro['name'];
+    $pro_names[] = $pro;
 }
 
 $product_names = [];
 foreach($searchproduct as $i){
-    array_push($product_names, $i['name'] );
+    array_push($product_names, $i['name'],$i['id'] );
+    // echo $i['id'];
 }
+
+// foreach($pro_names as $prod){
+//     $index = array_search($prod, $product_names);
+//     $page = ceil($index / 8);
+//     if($page==0){
+//         $page=1;
+//     }
+//     $hint="<a href='profile.php?page=$page'>" . $prod . "</a>";
+//     print('<pre>');
+//     print_r($hint);
+// }    
+
 
 foreach($pro_names as $prod){
     $index = array_search($prod, $product_names);
@@ -53,10 +95,14 @@ foreach($pro_names as $prod){
     if($page==0){
         $page=1;
     }
-    $hint="<a href='profile.php?page=$page'>" . $prod . "</a>";
+    $hint="<a href='product.php?id=$prod[id]'>" . $prod['name'] . "</a>";
     print('<pre>');
     print_r($hint);
-}    
+}  
+
+
+
+
 
 // print_r([
 //     'product_names' => $pro_names,
