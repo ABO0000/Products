@@ -53,7 +53,7 @@ class Products
         // $cleardb_db = substr($cleardb_url["path"], 1);
         // $active_group = 'default';
         // $query_builder = TRUE;
-// 
+
         // $this->db = mysqli_connect($cleardb_server, $cleardb_username, $cleardb_password, $cleardb_db);
 
         $this->db = new mysqli("127.0.0.1","admin","password","products");

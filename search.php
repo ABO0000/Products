@@ -97,33 +97,36 @@ function showResult(str) {
 
         
 
-        <ul class="grid" style="margin-top:0px ;width:80%">
+        <ul class="grid" style="margin-top:40px ;width:80%">
+            
             
             <?php
 
-                $result_page=8;
-                $sql = $productsClass->connect()->query("SELECT * FROM `products` WHERE name LIKE '%" . $search . "%' " ) ;
+            $result_page=8;
+            $sql = $productsClass->connect()->query("SELECT * FROM `products`") ;
 
-                $number_of_results=mysqli_num_rows($sql);
-                $number_of_pages =ceil($number_of_results/$result_page);
-                // print_r($number_of_results);
 
-                if(!isset($_GET['page'])){
-                    $page=1;
-                }else{
-                    $page=$_GET['page'];
-                }
-                
-                $this_page_first_result = ($page-1)*$result_page;
-                
+                    $number_of_results=mysqli_num_rows($sql);
                     
-                $sql = $productsClass->connect()->query("SELECT * FROM `products` WHERE name LIKE '%" . $search . "%' LIMIT " . $this_page_first_result . "," . $result_page) ;
-                
-                while (($row = mysqli_fetch_array($sql))) { 
-                    ?>
+                    $number_of_pages =ceil($number_of_results/$result_page);
 
+                    if(!isset($_GET['page'])){
+                        $page=1;
+                    }else{
+                        $page=$_GET['page'];
+                    }
+                    
+                    $this_page_first_result = ($page-1)*$result_page;
+                    
+                    
+                    $sql = $productsClass->connect()->query("SELECT * FROM `products` WHERE name LIKE '%" . $search . "%' LIMIT " . $this_page_first_result . "," . $result_page) ;
+                    
+                    $searchproduct=$productsClass->connect()->query("SELECT * FROM `products` WHERE name ='$search'")->fetch_assoc();
+                    // var_dump($searchproduct);
+                    while (($row = mysqli_fetch_array($sql))) { 
+                        ?>
                         <?php if($user['type']!=1 ){ ?>
-                            <li style="list-style-type:none ;margin-top:60px;margin-bottom:-200px ;display:flex;justify-content:center;flex-wrap:wrap ">
+                            <li style="list-style-type:none ;margin-top:60px;margin-bottom:-200px;display:flex;justify-content:center;flex-wrap:wrap ">
                                             
                                 <div  class="product" style="background-image: url('uploads/<?php echo $row['image'] ?>')"!important>
                                 </div>
@@ -134,36 +137,16 @@ function showResult(str) {
                         <?php }else{ ?>
                 
                             <li style="list-style-type:none ;margin-top:60px;margin-bottom:-200px ;display:flex;justify-content:center;flex-wrap:wrap ">
-                                <form action="config.php" method="post" style="margin-left:80% ">
-                                    <input name="delete" class="visuallyhidden" value="<?= $row['id']?>" />
-                                    <button style="background:none ; border:0"><img src='https://www.freeiconspng.com/thumbs/x-png/x-png-15.png' style="width:20px "></button>    
-                                </form>
+                                
                                 <div  class="product" style=" background-image: url('uploads/<?php echo $row['image'] ?>') "!important>
                                 </div>
                                 <div style="color:white;width: 250px;margin-top:-70px;display:flex;justify-content: space-between;">
                                     <a href="rating.php?id=<?= $row['id'] ?>" style="    text-decoration: none"> <h3 style="font-family: fantasy"><?php echo $row['name']; ?></h3></a> 
-                                    <a href='update.php?id=<?= $row['id'] ?>' style="   text-decoration: none; "><h4 style="font-family: cursive;">Update</h4></a>
+                                    <a href='update.php?id=<?= $row['id'] ?>' style="   text-decoration: none; margin-right:-30px "><h4 style="font-family: cursive;">Settings</h4></a>
                                 </div>
                             </li>
                         <?php } ?>
-
-
-
-
-
-                        <!-- <li style="list-style-type:none ;margin-top:60px;margin-bottom:-200px ;display:flex;justify-content:center;flex-wrap:wrap ">
-                            <form action="config.php" method="post" style="margin-left:80% ">
-                                <input name="delete" class="visuallyhidden" value="<?= $row['id']?>" />
-                                <button style="background:none ; border:0"><img src='https://www.freeiconspng.com/thumbs/x-png/x-png-15.png' style="width:20px "></button>    
-                            </form>
-                            <div  class="product" style=" background-image: url('uploads/<?php echo $row['image'] ?>') "!important>
-                            </div>
-                            <div style="color:white;width: 250px;margin-top:-70px;display:flex;justify-content: space-between;">
-                                <a href="rating.php?id=<?= $row['id'] ?>" style="text-decoration: none"> <h3 style="font-family: fantasy"><?php echo $row['name']; ?></h3></a> 
-                                <a href='update.php?id=<?= $row['id'] ?>' style="text-decoration: none; "><h4 style="font-family: cursive;">Update</h4></a>
-                            </div>
-                        </li> -->
-                <?php } ?>
+                    <?php } ?>
 
 
 
@@ -173,31 +156,34 @@ function showResult(str) {
 		</ul>
         <!-- <div style="width: 100%; display:flex;justify-content:center;">
             <?for($page=1;$page<=$number_of_pages;$page++){?>
-                <a href="search.php?page=<?=$page?>"><h1><?=$page?></h1></a>
+                <a href="profile.php?page=<?=$page?>"><h1><?=$page?></h1></a>
             <?php }?>
         </div> -->
                 <!-- <?php print_r($_SERVER)?> -->
 
         <div class="pagination-container wow zoomIn mar-b-1x" data-wow-duration="0.5s" style="width: 50%; display:flex;justify-content:center;">
             <ul class="pagination">
-                <?php if($_SERVER['REQUEST_URI']=='/search.php'){?>
+                <!-- <?php if($_SERVER['argv'][0]==[]){}?> -->
+                    <?php if($_SERVER['REQUEST_URI']=='/profile.php'){?> 
+                            <li class="pagination-item is-active"> <a class="pagination-link--wide" href="profile.php?page=1">1</a> </li>
+                            
+                            <?php for($page=2;$page<=$number_of_pages;$page++){?>
+                                <?php if($_SERVER['QUERY_STRING']=="page=$page"){ ?> 
+                                <!-- <?php if($_SERVER['argv'][0]=="page=$page"){ }?> -->
 
-
-                    <li class="pagination-item is-active"> <a class="pagination-link--wide" href="search.php?page=1">1</a> </li>
-                
-                    <?php for($page=2;$page<=$number_of_pages;$page++){?>
-                        <?php if($_SERVER['QUERY_STRING']=="page=$page"){ ?>
-                            <li class="pagination-item is-active"> <a class="pagination-link--wide" href="search.php?page=<?=$page?>"><?=$page?></a> </li>
+                                    <li class="pagination-item is-active"> <a class="pagination-link--wide" href="profile.php?page=<?=$page?>"><?=$page?></a> </li>
                         <?php }else{?>
-                            <li class="pagination-item"> <a class="pagination-link--wide" href="search.php?page=<?=$page?>"><?=$page?></a> </li>
+                            <li class="pagination-item"> <a class="pagination-link--wide" href="profile.php?page=<?=$page?>"><?=$page?></a> </li>
                         <?php }?>
                     <?php } ?>
                 <?php }else{?>
                     <?php for($page=1;$page<=$number_of_pages;$page++){?>
-                        <?php if($_SERVER['QUERY_STRING']=="page=$page"){ ?>
-                            <li class="pagination-item is-active"> <a class="pagination-link--wide" href="search.php?page=<?=$page?>"><?=$page?></a> </li>
+                        <?php if($_SERVER['QUERY_STRING']=="page=$page"){ ?> 
+                        <!-- <?php if($_SERVER['argv'][0]=="page=$page"){} ?> -->
+
+                            <li class="pagination-item is-active"> <a class="pagination-link--wide" href="profile.php?page=<?=$page?>"><?=$page?></a> </li>
                         <?php }else{?>
-                            <li class="pagination-item"> <a class="pagination-link--wide" href="search.php?page=<?=$page?>"><?=$page?></a> </li>
+                            <li class="pagination-item"> <a class="pagination-link--wide" href="profile.php?page=<?=$page?>"><?=$page?></a> </li>
                         <?php }?>
                     <?php }?>
 
@@ -213,6 +199,7 @@ function showResult(str) {
             </ul>
 
         </div>
+
     
     
 	</section>

@@ -174,8 +174,8 @@ function showResult(str) {
                             <li class="pagination-item is-active"> <a class="pagination-link--wide" href="profile.php?page=1">1</a> </li>
                             
                             <?php for($page=2;$page<=$number_of_pages;$page++){?>
-                                <!-- <?php if($_SERVER['QUERY_STRING']=="page=$page"){} ?>  -->
-                                <?php if($_SERVER['argv'][0]=="page=$page"){?>
+                                <!-- <?php if($_SERVER['QUERY_STRING']=="page=$page"){ }?>  -->
+                                <?php if($_SERVER['argv'][0]=="page=$page"){ ?>
 
                                     <li class="pagination-item is-active"> <a class="pagination-link--wide" href="profile.php?page=<?=$page?>"><?=$page?></a> </li>
                         <?php }else{?>
@@ -184,7 +184,7 @@ function showResult(str) {
                     <?php } ?>
                 <?php }else{?>
                     <?php for($page=1;$page<=$number_of_pages;$page++){?>
-                        <!-- <?php if($_SERVER['QUERY_STRING']=="page=$page"){ }?>  -->
+                        <!-- <?php if($_SERVER['QUERY_STRING']=="page=$page"){} ?>  -->
                         <?php if($_SERVER['argv'][0]=="page=$page"){ ?>
 
                             <li class="pagination-item is-active"> <a class="pagination-link--wide" href="profile.php?page=<?=$page?>"><?=$page?></a> </li>
