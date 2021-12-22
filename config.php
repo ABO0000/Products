@@ -46,17 +46,17 @@ class Products
 
     public function connect()
     {
-        // $cleardb_url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-        // $cleardb_server = $cleardb_url["host"];
-        // $cleardb_username = $cleardb_url["user"];
-        // $cleardb_password = $cleardb_url["pass"];
-        // $cleardb_db = substr($cleardb_url["path"], 1);
-        // $active_group = 'default';
-        // $query_builder = TRUE;
+        $cleardb_url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+        $cleardb_server = $cleardb_url["host"];
+        $cleardb_username = $cleardb_url["user"];
+        $cleardb_password = $cleardb_url["pass"];
+        $cleardb_db = substr($cleardb_url["path"], 1);
+        $active_group = 'default';
+        $query_builder = TRUE;
 
-        // $this->db = mysqli_connect($cleardb_server, $cleardb_username, $cleardb_password, $cleardb_db);
-
-        $this->db = new mysqli("127.0.0.1","admin","password","products");
+        $this->db = mysqli_connect($cleardb_server, $cleardb_username, $cleardb_password, $cleardb_db);
+//   
+        // $this->db = new mysqli("127.0.0.1","admin","password","products");
 
         return $this->db;
     }
@@ -202,7 +202,7 @@ class Products
 
 
             if ($product != NULL) {
-                $errors['nameerror'] = "anun@ zbaxvaca";
+                $errors['nameerror'] = "Choose another name";
             } 
         }
         if (empty($description)) {
@@ -282,8 +282,14 @@ class Products
         } else if (empty($description)) {
             $errors['descriptionerror'] = 'description field is required';
         } else {
+            $product = $this->connect()->query("select * from products where name = '$name' ")->fetch_assoc();
 
-            $this->connect()->query("UPDATE products SET name='$name', description='$description'  WHERE id=$product_id");
+
+            if ($product != NULL) {
+                $errors['nameerror'] = "Choose another name";
+            }else{ 
+                $this->connect()->query("UPDATE products SET name='$name', description='$description'  WHERE id=$product_id");
+            }
         }
         if (count($errors)) {
             $_SESSION['updateerrors'] = $errors;

@@ -466,14 +466,15 @@
                 <h1 style="color:white;margin-left: 10px; "><?php echo $user['surname']; ?> </h1>
                 <p style="margin-left: 25px;"><a href='addproduct.php' style="color:white "> Add Product</a> </p>
                 <p style="margin-left: 15px; padding-right: 30px;"><a href='index.php' style="color:white "> Logout</a> </p>
-            <?php }else{ ?>
-                <p style="padding-right: 30px;"><a href='index.php' style="color:white "> Login</a> </p>
-            <?php } ?>
-        </div>
-    </div>
-    
-    <div class="student_rating_bg" style="margin-top: 80px;">
-        <div class="student_rating_container">
+                <?php }else{ ?>
+                    <p style="padding-right: 30px;"><a href='index.php' style="color:white "> Login</a> </p>
+                    <?php } ?>
+                </div>
+            </div>
+            
+            <div class="student_rating_bg" style="margin-top: 80px;">
+                <button onclick="history.go(-1);" style="background:none;width: 50px;height:600px;color:white;font-size:30px;margin-left:390px;margin-top:10px ; position:absolute"> < </button>
+                <div class="student_rating_container">
             <h2 class="student_rating_session"><label class="fa fa-star icon" for="star5" title="Rocks!"></label>Rate Your Session</h2>
             <div class="student_rating_header">
                     <img src="uploads/<?php echo $product['image'] ?>" style="width: 170px;height:170px;margin-top:-80px"/>

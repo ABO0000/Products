@@ -46,8 +46,8 @@
         <!-- <input type='number' placeholder="Age" name='age' value="<?php isset($data['age']) ? print $data['age'] : '' ; ?>">   -->
         <!-- <input type="number" size="4" min="6" placeholder="Age" name='age' value="<?php isset($data['age']) ? print $data['age'] : '' ; ?>" required > -->
 
-        <select name="age" class="form-control" id="verify-year" value="<?php isset($data['age']) ? print $data['age'] : '' ; ?>" style="width: 100%;height: 100%;border: 2px solid #e7e7e7;padding: 10px 20px;font-size: 1rem;border-radius: 30px;background: transparent;outline: none;transition: .3s;" required>
-                <option value="none"disabled selected value style="color: -internal-light-dark(black, white);">Birthday Year</option>
+        <select name="age" class="form-control" id="verify-year"  style="width: 100%;height: 100%;border: 2px solid #e7e7e7;padding: 10px 20px;font-size: 1rem;border-radius: 30px;background: transparent;outline: none;transition: .3s;" required>
+                <option value="<?php isset($data['age']) ? print $data['age'] : "none" ; ?>" style="display:none" selected style="color: -internal-light-dark(black, white);"><?php isset($data['age']) ? print $data['age'] :print "Birthday Year"?></option>
                 <option value="1940">1940</option>
                 <option value="1941">1941</option>
                 <option value="1942">1942</option>

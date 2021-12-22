@@ -41,13 +41,14 @@
                 <h1 style="color:white;margin-left: 10px; "><?php echo $user['surname']; ?> </h1>
                 <p style="margin-left: 25px;"><a href='addproduct.php' style="color:white "> Add Product</a> </p>
                 <p style="margin-left: 15px; padding-right: 30px;"><a href='index.php' style="color:white "> Logout</a> </p>
-            <?php }else{ ?>
-                <p style="padding-right: 30px;"><a href='index.php' style="color:white "> Login</a> </p>
-            <?php } ?>
+                <?php }else{ ?>
+                    <p style="padding-right: 30px;"><a href='index.php' style="color:white "> Login</a> </p>
+                <?php } ?>
+            </div>
         </div>
-    </div>
-    
+            
     <div style="display:flex;justify-content: center;align-items: center;margin-top:110px ">
+        <button onclick="history.go(-1);" style="background: none;width: 50px;height:408px;color:white;font-size:30px;margin-left:-50px"> < </button>
         <div class="container" >
             <form class='login-email' method="post" action="config.php" enctype="multipart/form-data" style="margin-bottom:60px">
                 <input type="hidden" name="addproduct">
@@ -64,7 +65,7 @@
                     <!-- <input type="file" name="c_image" value="<?php echo $img; ?>"  /> -->
                     <!-- <img src="bg.jpg" width="150px" height="100px"> -->
                     <label for="fileToUpload" style="color:red"><?php isset($errors['imageerror']) ? print $errors['imageerror'] : '' ; ?></label>
-                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <input type="file" name="fileToUpload" id="fileToUpload" value="<?php isset($data['image']) ? print $data['image'] : '' ; ?>">
                     <input class="btn" type="submit" value="Upload Image" name="submit" style="margin-top:25px">
                 </div>
                 <!-- <div class='input-group'>

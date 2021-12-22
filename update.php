@@ -54,6 +54,7 @@
         </div>
     </div>
     
+    <button onclick="history.go(-1);" style="background:none;width: 50px;height:420px;color:white;font-size:30px;margin-left:425px;margin-top:110px ; position:absolute"> < </button>
     <div style="display:flex;justify-content: center;align-items: center;margin-top:110px ">
         <div class="container">
             

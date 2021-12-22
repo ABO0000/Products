@@ -266,16 +266,17 @@
                 </a>
             </div>
         </div> -->
-
-
-    <div class="slide-container">
-        <div class="wrapper">
-            <div class="clash-card barbarian">
-                <div class="clash-card__image clash-card__image--barbarian">
-                    <img src="uploads/<?php echo $product['image'] ?>"  style="width:301px;height:301px;margin-top:45px;margin-left:23%; border-top-left-radius:10%; border-top-right-radius: 10%; " >
-
-                    <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/barbarian.png" alt="barbarian" /> -->
-                </div>
+        
+        
+        <div class="slide-container">
+            <div class="wrapper">
+                <button onclick="history.go(-1);" style="background:none;width: 50px;height:477px;color:white;font-size:30px;margin-left:-50px;margin-top:-20px ; position:absolute"> < </button>
+                <div class="clash-card barbarian">
+                    <div class="clash-card__image clash-card__image--barbarian">
+                        <img src="uploads/<?php echo $product['image'] ?>"  style="width:301px;height:301px;margin-top:45px;margin-left:23%; border-top-left-radius:10%; border-top-right-radius: 10%; " >
+                        
+                        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/barbarian.png" alt="barbarian" /> -->
+                    </div>
 
                 <div class="clash-card__level clash-card__level--barbarian">Level 4</div>
                     <div class="clash-card__unit-name"> <?php echo $product['name'] ?></div>
@@ -285,14 +286,10 @@
 
             
                     <div class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
-                        <a href="profile.php" style="color: white " >
-                            <div class="one-third " style="width:50%">
-                                <div class="stat">Back</div>
-                            </div>
-                        </a>
+                        
 
                         <a style="color: white" href="rating.php?id=<?php echo $product['id'] ?>">
-                            <div class="one-third no-border" style="width: 50%;">
+                            <div class="one-third no-border" style="width: 100%;">
                                 <div class="stat">Rating</div>
                             </div>
                         </a>
